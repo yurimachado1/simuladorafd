@@ -1,0 +1,35 @@
+def simular_afd(estado_inicial, alfabeto, estados, estados_finais, transicoes, palavra_entrada):
+    estado_atual = estado_inicial
+
+    for simbolo in palavra_entrada:
+        if simbolo not in alfabeto:
+            return "Rejeita"  # Palavra contém símbolo inválido
+
+        estado_atual = transicoes.get(estado_atual, {}).get(simbolo, None)
+        if estado_atual is None:
+            return "Rejeita"  # Transição não definida para o estado atual e símbolo
+
+    if estado_atual in estados_finais:
+        return "Aceita"
+    else:
+        return "Rejeita"
+
+def main():
+    estado_inicial = input("Estado inicial: ")
+    alfabeto = input("Símbolos do alfabeto (separados por espaço): ").split()
+    estados = input("Conjunto de estados (separados por espaço): ").split()
+    estados_finais = input("Conjunto de estados finais (separados por espaço): ").split()
+
+    transicoes = {}
+    for estado in estados:
+        transicoes[estado] = {}
+        for simbolo in alfabeto:
+            transicoes[estado][simbolo] = input(f"Transição de {estado} com símbolo '{simbolo}': ")
+
+    palavra_entrada = input("Digite a palavra: ")
+
+    resultado = simular_afd(estado_inicial, alfabeto, estados, estados_finais, transicoes, palavra_entrada)
+    print(resultado)
+
+if __name__ == "__main__":
+    main()
